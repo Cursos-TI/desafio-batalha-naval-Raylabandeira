@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+#define TAM_TABULEIRO 10
+#define TAM_HABILIDADE 5
+
+// Função para aplicar matriz de habilidade ao tabuleiro
+void aplicarHabilidade(int tabuleiro[TAM_TABULEIRO][TAM_TABULEIRO], int habilidade[TAM_HABILIDADE][TAM_HABILIDADE], int origemLinha, int origemColuna) {
+    for (int i = 0; i < TAM_HABILIDADE; i++) {
+        for (int j = 0; j < TAM_HABILIDADE; j++) {
+            int linhaTabuleiro = origemLinha + i - TAM_HABILIDADE / 2;
+            int colunaTabuleiro = origemColuna + j - TAM_HABILIDADE / 2;
+
+            // Garantindo que as coordenadas estejam dentro do tabuleiro
+            if (linhaTabuleiro >= 0 && linhaTabuleiro < TAM_TABULEIRO && colunaTabuleiro >= 0 && colunaTabuleiro < TAM_TABULEIRO) {
+                if (habilidade[i][j] == 1) {
+                    tabuleiro[linhaTabuleiro][colunaTabuleiro] = 5; // Marca área afetada
+                }
+            }
+        }
+    }
+}
+
+// Função para exibir o tabuleiro
+void exibirTabuleiro(int tabuleiro[TAM_TABULEIRO][TAM_TABULEIRO]) {
+    printf("Tabuleiro de Batalha Naval:\n");
+    for (int i = 0; i < TAM_TABULEIRO; i++) {
+        for (int j = 0; j < TAM_TABULEIRO; j++) {
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    // Inicializando o tabuleiro 10x10 com 0 (água)
+    int tabuleiro[TAM_TABULEIRO][TAM_TABULEIRO] = {0};
+
+    // Exemplo: Posicionando um navio no tabuleiro
+    tabuleiro[4][4] = 3;
+    tabuleiro[4][5] = 3;
+    tabuleiro[4][6] = 3;
+
+    // Matriz de habilidade Cone
+    int habilidadeCone[TAM_HABILIDADE][TAM_HABILIDADE] = {
+        {0, 0, 1, 0, 0},
+        {0, 1, 1, 1, 0},
+        {1, 1, 1, 1, 1},
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0}
+    };
+
+    // Matriz de habilidade Cruz
+    int habilidadeCruz[TAM_HABILIDADE][TAM_HABILIDADE] = {
+        {0, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0},
+        {1, 1, 1, 1, 1},
+        {0, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0}
+    };
+
+    // Matriz de habilidade Octaedro
+    int habilidadeOctaedro[TAM_HABILIDADE][TAM_HABILIDADE] = {
+        {0, 0, 1, 0, 0},
+        {0, 1, 1, 1, 0},
+        {1, 1, 1, 1, 1},
+        {0, 1, 1, 1, 0},
+        {0, 0, 1, 0, 0}
+    };
+
+    // Aplicando habilidades ao tabuleiro
+    aplicarHabilidade(tabuleiro, habilidadeCone, 2, 2);       // Cone centrado em (2,2)
+    aplicarHabilidade(tabuleiro, habilidadeCruz, 5, 5);      // Cruz centrada em (5,5)
+    aplicarHabilidade(tabuleiro, habilidadeOctaedro, 8, 8);  // Octaedro centrado em (8,8)
+
+    // Exibindo o tabuleiro final
+    exibirTabuleiro(tabuleiro);
+
+    return 0;
+}
