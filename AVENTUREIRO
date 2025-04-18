@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    // Inicializando o tabuleiro 10x10 com 0 (água)
+    int tabuleiro[10][10] = {0};
+
+    // Coordenadas iniciais e tamanho fixo dos navios (3 posições cada)
+    int linhaHorizontal = 1, colunaHorizontal = 2;
+    int linhaVertical = 4, colunaVertical = 6;
+    int linhaDiagonal1 = 0, colunaDiagonal1 = 0; // Diagonal principal (crescente)
+    int linhaDiagonal2 = 6, colunaDiagonal2 = 9; // Diagonal secundária (decrescente)
+    int tamanhoNavio = 3;
+
+    // Posicionando o navio horizontal
+    for (int i = 0; i < tamanhoNavio; i++) {
+        tabuleiro[linhaHorizontal][colunaHorizontal + i] = 3; // Marcando posição com valor 3
+    }
+
+    // Posicionando o navio vertical
+    for (int i = 0; i < tamanhoNavio; i++) {
+        tabuleiro[linhaVertical + i][colunaVertical] = 3; // Marcando posição com valor 3
+    }
+
+    // Posicionando o navio diagonal principal
+    for (int i = 0; i < tamanhoNavio; i++) {
+        tabuleiro[linhaDiagonal1 + i][colunaDiagonal1 + i] = 3; // Linha e coluna aumentam
+    }
+
+    // Posicionando o navio diagonal secundária
+    for (int i = 0; i < tamanhoNavio; i++) {
+        tabuleiro[linhaDiagonal2 + i][colunaDiagonal2 - i] = 3; // Linha aumenta, coluna diminui
+    }
+
+    // Exibindo o tabuleiro completo
+    printf("Tabuleiro de Batalha Naval:\n");
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
